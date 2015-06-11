@@ -1,99 +1,71 @@
-" vim:fdm=marker
-" Vundle setup {{{
-    set nocompatible              " be iMproved
-    filetype off                  " required!
-    set rtp+=~/.vim/bundle/vundle/
-    call vundle#rc()
+" Vundle {{{
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
 
-    " let Vundle manage Vundle
-    Bundle 'gmarik/vundle'
-" }}}
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-git'
+
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'scrooloose/nerdtree'
+Plugin 'altercation/vim-colors-solarized'
+
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
+Plugin 'kien/ctrlp.vim' 
+Plugin 'ivanov/vim-ipython'
+
+Plugin 'L9'
+Plugin 'FuzzyFinder'
+Plugin 'Valloric/YouCompleteMe'
+
+" Syntax check for C,C++, fortran and a lot more, \cc comment
+Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdcommenter'
+
+call vundle#end()
+filetype plugin indent on
+"}}}
+
 " Indenting {{{
     set cindent
     set tabstop=4
     set shiftwidth=4
     set expandtab
+    set ruler
 " }}}
-" My bundles {{{
-" original repos on GitHub
-" Fugitive: Git clone
-Bundle 'tpope/vim-fugitive'
-" enclose stuff in paranthesis etc.
-Bundle 'tpope/vim-surround'
-" Easymotion: makes it easy to navigate with  \\w, \\t, ..
-Bundle 'Lokaltog/vim-easymotion'
-" Sparkup: HTML stuff
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Rails: Ruby rails stuff
-Bundle 'tpope/vim-rails.git'
-" Nerdtree: IDE like behaviour
-Bundle 'scrooloose/nerdtree'
-" Nerdcommenter: Easy Commenting
-Bundle 'scrooloose/nerdcommenter'
-" Solarized: Pretty colors
-Bundle 'altercation/vim-colors-solarized'
-" Ultisnips: Crazy snips..
-Bundle 'SirVer/ultisnips'
-" Snippet package:
-Bundle 'honza/vim-snippets'
-" vim-scripts repos
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-" Yankring suddenly makes vim freeze
-Bundle 'YankRing.vim'
-" C/C++/Objective-C completion using Clang
-Bundle 'Valloric/YouCompleteMe'
-" Syntax check for C,C++, fortran and a lot more
-Bundle 'scrooloose/syntastic'
-" Python plugin (python docs etc., may be integrated in YCM at some point)
-"Bundle 'davidhalter/jedi-vim'
-" Alternat between files
-Bundle 'vim-scripts/a.vim'
-"" Status line:
-"Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-" iPython integration
-Bundle  'ivanov/vim-ipython'
-" }}}
-" Latex Bundles {{{
-" }}}
+"
 " Colors and Syntax {{{
-colorscheme solarized
-set t_Co=16
+set nu
 syntax enable
-set background=light
+set background=dark
+set t_Co=16
+colo solarized
 " }}}
+
 " UltiSnips/YCM fix{{{
     let g:UltiSnipsExpandTrigger="<c-j>"
     let g:UltiSnipsJumpForwardTrigger="<c-j>"
     let g:UltiSnipsJumpBackwardTrigger="<c-k>"
     let g:UltiSnipsListSnippets="<c-tab>"
 " }}}
-" YCM+jedi-vim {{{
-"nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" }}}
+
 " YCM settings: {{{
 let g:ycm_autoclose_preview_window_after_completion=1
-"let g:ycm_autoclose_preview_window_after_insertion=1
 " }}}
-" Folding {{{
-autocmd FileType fortran let fortran_fold=1
-autocmd FileType fortran let fortran_fold_conditionals=1
-autocmd FileType fortran set syntax=fortran
-autocmd FileType fortran set foldlevel=1
-set foldmethod=syntax
 
-" }}}
-" Relative line numbers
-"set rnu
-" Line and character number in lower right
-set ruler
-" Keymap {{{
-" browse through tabs
-map <f7> <esc>:tabp<cr>
-map <f8> <esc>:tabn<cr>
-" NERDTree
+" General Keybinds: {{{
 map <f6> <esc>:NERDTreeToggle<cr>
+nnoremap <leader>bb :buffers<cr>:b<space>
+nnoremap <space> za
 " }}}
+
 " NERDTree close when no active buffer: {{{
 autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
 
@@ -109,24 +81,6 @@ function! s:CloseIfOnlyNerdTreeLeft()
   endif
 endfunction
 " }}}
-" When using pide alias, runs the current script in ipython in screen window 1
-" Powerline setup
-" Python IDE setup with screen and iPython {{{
-" sends command to ipython 
-command! -nargs=1 IP :execute 'silent !screen -S $STY -p 1 -X stuff "`printf "<args>\r"`"' | redraw!
-command! -nargs=1 IPqt :execute 'silent !wmctrl -a IPython; xdotool type "<args>"; xdotool key KP_Enter; wmctrl -i -a $WINDOWID' | redraw!
-
-" screen:
-"autocmd FileType python nmap <buffer> <s-f5> :IP cd %:p:h<cr>
-"autocmd FileType python nmap <buffer> <f5> :IP run %:p<cr>
-" qtconsole:
-"autocmd FileType python nmap <silent><buffer> <c-R> :IPqt cd %:p:h<cr>
-"autocmd FileType python nmap <silent><buffer> <s-R> :IPqt run %:p<cr>
-"nmap <silent><buffer> <c-R>:IPqt cd %:p:h<cr>
-"nmap <C-R> :IPqt cd %:p:h<cr>
-"}}}
-set laststatus=2
-filetype plugin indent on     " required!
 
 " Syntax within syntax {{{
 function! TextEnableCodeSnip(filetype,start,end,textSnipHl) abort
@@ -151,5 +105,5 @@ function! TextEnableCodeSnip(filetype,start,end,textSnipHl) abort
   execute 'syntax region textSnip'.ft.' matchgroup='.a:textSnipHl.' start="'.a:start.'" end="'.a:end.'" contains=@'.group
 endfunction
 "}}}
-let g:ycm_confirm_extra_conf = 0
+
 au BufNewFile,BufRead *.tikz set filetype=tex
