@@ -45,8 +45,8 @@ filetype plugin indent on
 set nu
 syntax enable
 set background=dark
-set t_Co=16
-colo solarized
+set t_Co=256
+"colo solarized
 " }}}
 
 " UltiSnips/YCM fix{{{
@@ -107,3 +107,5 @@ endfunction
 "}}}
 
 au BufNewFile,BufRead *.tikz set filetype=tex
+au BufNewFile,BufRead *.ua set filetype=xml
+au BufNewFile,BufRead *.jinja2 set filetype=xml
